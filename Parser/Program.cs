@@ -15,13 +15,16 @@ namespace Parser
         {
             WebClient wc = new WebClient();
 
+            int answer;
+
             do
             {
                 Console.WriteLine("Enter the number that you want to parse:\n" +
                                 "1)Aimp skins\n" +
                                 "2)Certificates on Geekbrains\n"+
                                 "3)Exit\n");
-                switch (Console.Read())
+                answer = int.Parse(Console.ReadLine());
+                switch (answer)
                 {
                     case (1):
                         Console.WriteLine(DownloadSkinsForAimp(wc));
@@ -29,12 +32,14 @@ namespace Parser
                     case (2):
                         Console.WriteLine(DownloadCertificates(wc));
                         break;
+                    case 3:
+                        break;
                     default:
                         Console.WriteLine("You specify an invalid command. Please try again.");
                         break;
                 }
 
-            } while (Console.Read()==3);
+            } while (answer != 3);
 
 
 
