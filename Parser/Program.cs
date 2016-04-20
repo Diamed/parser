@@ -13,27 +13,42 @@ namespace Parser
     {
         static void Main()
         {
-            Console.WriteLine("Enter the number that you want to parse:\n" +
-                                "1)Aimp skins\n" +
-                                "2)Certificates on Geekbrains\n");
-            switch(Console.Read()){
-                case (1):
-                    Console.WriteLine(DownloadSkinsForAimp());
-                    break;
-                case (2):
-                    break;
-                default:
-                    Console.WriteLine("You specify an invalid command. Please try again.");
-                    break;
-            }
+            WebClient wc = new WebClient();
 
-            
+            do
+            {
+                Console.WriteLine("Enter the number that you want to parse:\n" +
+                                "1)Aimp skins\n" +
+                                "2)Certificates on Geekbrains\n"+
+                                "3)Exit\n");
+                switch (Console.Read())
+                {
+                    case (1):
+                        Console.WriteLine(DownloadSkinsForAimp(wc));
+                        break;
+                    case (2):
+                        Console.WriteLine(DownloadCertificates(wc));
+                        break;
+                    default:
+                        Console.WriteLine("You specify an invalid command. Please try again.");
+                        break;
+                }
+
+            } while (Console.Read()==3);
+
+
+
         }
 
-        static string DownloadSkinsForAimp()
+
+        /// <summary>
+        /// Method to download skins from Aimp.ru
+        /// </summary>
+        /// <param name="wc"></param>
+        /// <returns>String with description of result</returns>
+        static string DownloadSkinsForAimp(WebClient wc)
         {
             Console.WriteLine("Downloading began");
-            WebClient wc = new WebClient();
             try
             {
                 for (int i = 0; i <= 9; i++)
@@ -83,6 +98,41 @@ namespace Parser
             string name = rightPartOfHtml.Substring(0, rightPartOfHtml.IndexOf("<")).Replace(" ", "_");
 
             return name;
+        }
+
+        /// <summary>
+        /// Method of downloading certificates
+        /// </summary>
+        /// <param name="wc"></param>
+        /// <returns>String description of result</returns>
+        static string DownloadCertificates(WebClient wc)
+        {
+            string currentUser = Environment.UserName;
+
+            Console.WriteLine("Downloading began");
+
+            try
+            {
+                for (int i = 0; i <= 9; i++)
+                {
+                    try
+                    {
+                        // All certificates on this site are stored in '.pdf' format
+                        wc.DownloadFile("https://geekbrains.ru//certificates//7075" + i + ".pdf", "c:\\users\\" + currentUser + "\\download\\7075" + i + ".pdf");
+
+                        Console.WriteLine("Download certificate №7075" + i + " is succesfull");
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Download certificate №7075" + i + " is failed");
+                    }
+                }
+                return "Downloading certificates are complite!";
+            }
+            catch
+            {
+                return "Something went is wrong";
+            }
         }
     }
 }
