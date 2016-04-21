@@ -53,7 +53,8 @@ namespace Parser
             }
             catch
             {
-
+                Console.WriteLine("Something went is wrong.");
+                Console.ReadLine();
             }
             
 
