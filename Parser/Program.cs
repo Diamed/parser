@@ -72,6 +72,8 @@ namespace Parser
                 for (int i = 0; i <= 5; i++)
                 {
                     string id = "79" + i;
+                    string name = GetNameOfSkin(wc, id);
+                    
                     // Path where we will download
                     string path = "aimp.ru/index.php?do=download&sub=catalog&id=" + id;
                                        
@@ -81,14 +83,14 @@ namespace Parser
                         // Launch the browser and pass as an argument the path
                         Process.Start("chrome.exe", path);
 
-                        Console.WriteLine("Download " + GetNameOfSkin(wc, id) + " is succesfull!");
+                        Console.WriteLine("Download " + name + " is succesfull!");
 
                         // Wait for 5 seconds to avoid stack overflow
                         Thread.Sleep(5000);
                     }
                     catch
                     {
-                        Console.WriteLine("Download" + GetNameOfSkin(wc, id) + "failed");
+                        Console.WriteLine("Download" + name + "failed");
                     }
                 }
             }
