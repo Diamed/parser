@@ -15,31 +15,47 @@ namespace Parser
         {
             WebClient wc = new WebClient();
 
-            int answer;
-
-            do
+            try
             {
-                Console.WriteLine("Enter the number that you want to parse:\n" +
-                                "1)Aimp skins\n" +
-                                "2)Certificates on Geekbrains\n"+
-                                "3)Exit\n");
-                answer = int.Parse(Console.ReadLine());
-                switch (answer)
+                do
                 {
-                    case (1):
-                        Console.WriteLine(DownloadSkinsForAimp(wc));
-                        break;
-                    case (2):
-                        Console.WriteLine(DownloadCertificates(wc));
-                        break;
-                    case 3:
-                        break;
-                    default:
-                        Console.WriteLine("You specify an invalid command. Please try again.");
-                        break;
-                }
+                    try
+                    {
+                        Console.WriteLine("Enter the number that you want to parse:\n" +
+                                    "1)Aimp skins\n" +
+                                    "2)Certificates on Geekbrains\n" +
+                                    "3)Exit\n");
+                        switch (int.Parse(Console.ReadLine()))
+                        {
+                            case (1):
+                                Console.Clear();
+                                Console.WriteLine(DownloadSkinsForAimp(wc));
+                                break;
+                            case (2):
+                                Console.Clear();
+                                Console.WriteLine(DownloadCertificates(wc));
+                                break;
+                            case 3:
+                                break;
+                            default:
+                                Console.Clear();
+                                Console.WriteLine("You specify an invalid command. Please try again.\n");
+                                break;
+                        }
+                    }
+                    catch
+                    {
+                        Console.Clear();
+                        Console.WriteLine("You specify an invalid command. Please try again.\n");
+                    }
 
-            } while (answer != 3);
+                } while (int.Parse(Console.ReadLine()) != 3);
+            }
+            catch
+            {
+
+            }
+            
 
 
 
@@ -56,7 +72,7 @@ namespace Parser
             Console.WriteLine("Downloading began");
             try
             {
-                for (int i = 0; i <= 9; i++)
+                for (int i = 0; i <= 5; i++)
                 {
                     string id = "79" + i;
                     // Path where we will download
@@ -81,9 +97,9 @@ namespace Parser
             }
             catch
             {
-                return "Something went is wrong";
+                return "\nSomething went is wrong";
             }
-            return "Downloading complete";
+            return "\nDownloading complete";
             
         }
 
@@ -118,12 +134,12 @@ namespace Parser
 
             try
             {
-                for (int i = 0; i <= 9; i++)
+                for (int i = 0; i <= 5; i++)
                 {
                     try
                     {
                         // All certificates on this site are stored in '.pdf' format
-                        wc.DownloadFile("https://geekbrains.ru//certificates//7075" + i + ".pdf", "c:\\users\\" + currentUser + "\\download\\7075" + i + ".pdf");
+                        wc.DownloadFile("https://geekbrains.ru//certificates//7075" + i + ".pdf", "c:\\users\\" + currentUser + "\\downloads\\7075" + i + ".pdf");
 
                         Console.WriteLine("Download certificate №7075" + i + " is succesfull");
                     }
@@ -132,12 +148,12 @@ namespace Parser
                         Console.WriteLine("Download certificate №7075" + i + " is failed");
                     }
                 }
-                return "Downloading certificates are complite!";
             }
             catch
             {
-                return "Something went is wrong";
+                return "\nSomething went is wrong";
             }
+            return "\nDownloading certificates are complite!";
         }
     }
 }
